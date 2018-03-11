@@ -13,9 +13,6 @@ import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
-/**
- * Created by wildan on 3/19/2017.
- */
 
 public class MqttHelper {
     public MqttAndroidClient mqttAndroidClient;
