@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://C:\Users\ongajong\Documents\mqtt-android-tutorial-master\MQTTTutorial.iml" filepath="C:\Users\ongajong\Documents\mqtt-android-tutorial-master\MQTTTutorial.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://C:\Users\ongajong\Documents\mqtt-android-tutorial-master\app\app.iml" filepath="C:\Users\ongajong\Documents\mqtt-android-tutorial-master\app\app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mqtt-android-tutorial-master.iml" filepath="$PROJECT_DIR$/mqtt-android-tutorial-master.iml" />
+    </modules>
+  </component>
+</project>
