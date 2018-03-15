@@ -1,7 +1,10 @@
 package com.frost.mqtttutorial;
 
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.telephony.SmsManager;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
@@ -49,12 +52,21 @@ public class MainActivity extends AppCompatActivity {
         dataReceived = (TextView) findViewById(R.id.dataReceived);
         btn_send = (Button) findViewById(R.id.send_sms);
         startMqtt();
-        btn_send.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v)
-            {   checkAndUpdateUserPrefNumber();
-                SmsHelper.sendDebugSms(mUserMobilePhone, SmsMessage);
-                Toast.makeText(getApplicationContext(), R.string.toast_sending_sms, Toast.LENGTH_SHORT).show();
-            }        });
+        btn_send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                PendingIntent pi = PendingIntent.getActivity(getApplicationContext(),0,intent,0);
+                SmsManager smsManager = SmsManager.getDefault();
+                try{
+                    smsManager.sendTextMessage(mUserMobilePhone, null, SmsMessage, pi, null);
+                Toast.makeText(MainActivity.this, "Message Sent Successfully", Toast.LENGTH_SHORT).show();}
+                catch (Exception e){
+                    Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     private void startMqtt(){
