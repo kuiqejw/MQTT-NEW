@@ -14,4 +14,13 @@ public class ExampleUnitTest {
     public void addition_isCorrect() throws Exception {
         assertEquals(4, 2 + 2);
     }
+    @Test
+    public void SmsHelper_isValidPhoneNumber() throws Exception {
+        assertTrue(SmsHelper.isValidPhoneNumber("91234567"));
+    }
+    @Test
+    public void SmsHelper_notValidNumber() throws Exception {
+        assertFalse(SmsHelper.isValidPhoneNumber("Java Unit Test"));
+    }
+
 }

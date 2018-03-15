@@ -1,8 +1,6 @@
 package com.frost.mqtttutorial;
 
-/**
- * Created by ongajong on 3/11/2018.
- */
+
 import android.telephony.SmsManager;
 
 /**
@@ -14,7 +12,12 @@ public class SmsHelper {
     public static final String SMS_CONDITION = "Some condition";
 
     public static boolean isValidPhoneNumber(String phoneNumber) {
-        return android.util.Patterns.PHONE.matcher(phoneNumber).matches();
+        if (phoneNumber.charAt(0)== '9' || phoneNumber.charAt(0) == '8'){
+            if (phoneNumber.length() == 8 ){
+                return true;
+            }
+        }
+        return false;
     }
 
     public static void sendDebugSms(String number, String smsBody) {

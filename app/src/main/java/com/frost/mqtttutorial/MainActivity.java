@@ -52,15 +52,19 @@ public class MainActivity extends AppCompatActivity {
         dataReceived = (TextView) findViewById(R.id.dataReceived);
         btn_send = (Button) findViewById(R.id.send_sms);
         startMqtt();
+        if (!hasReadSmsPermission()) {
+            showRequestPermissionsInfoAlertDialog();
+        }
         btn_send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (!hasValidPreConditions()) return;
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 PendingIntent pi = PendingIntent.getActivity(getApplicationContext(),0,intent,0);
                 SmsManager smsManager = SmsManager.getDefault();
                 try{
                     smsManager.sendTextMessage(mUserMobilePhone, null, SmsMessage, pi, null);
-                Toast.makeText(MainActivity.this, "Message Sent Successfully", Toast.LENGTH_SHORT).show();}
+                    Toast.makeText(MainActivity.this, "Message Sent Successfully", Toast.LENGTH_SHORT).show();}
                 catch (Exception e){
                     Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
                     e.printStackTrace();
@@ -86,8 +90,8 @@ public class MainActivity extends AppCompatActivity {
             public void messageArrived(String topic, MqttMessage mqttMessage) throws Exception {
                 Log.w("Debug",mqttMessage.toString());
                 dataReceived.setText(mqttMessage.toString());
-                mUserMobilePhone = mqttMessage.toString().split(" ")[0];
-                SmsMessage = mqttMessage.toString().split(" ")[1];
+                mUserMobilePhone = mqttMessage.toString().split(":")[0];
+                SmsMessage = mqttMessage.toString().split(":")[1];
 
             }
 
@@ -97,16 +101,56 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
     /**
-     * Checks if stored SharedPreferences value needs updating and updates \o/
+     * Validates if the app has readSmsPermissions and the mobile phone is valid
+     *
+     * @return boolean validation value
      */
-    private void checkAndUpdateUserPrefNumber() {
-        if (TextUtils.isEmpty(mUserMobilePhone)  ) {
-            mSharedPreferences
-                    .edit()
-                    .putString(PREF_USER_MOBILE_PHONE, mUserMobilePhone)
-                    .apply();
+    private boolean hasValidPreConditions() {
+        if (!hasReadSmsPermission()) {
+            requestReadAndSendSmsPermission();
+            return false;
         }
+
+        if (!SmsHelper.isValidPhoneNumber(mUserMobilePhone)) {
+            Toast.makeText(getApplicationContext(), R.string.error_invalid_phone_number, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
+    /**
+     * Optional informative alert dialog to explain the user why the app needs the Read/Send SMS permission
+     */
+    private void showRequestPermissionsInfoAlertDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.permission_alert_dialog_title);
+        builder.setMessage(R.string.permission_dialog_message);
+        builder.setPositiveButton(R.string.action_ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                requestReadAndSendSmsPermission();
+            }
+        });
+        builder.show();
+    }
+    /**
+     * Runtime permission shenanigans
+     */
+    private boolean hasReadSmsPermission() {
+        return ContextCompat.checkSelfPermission(MainActivity.this,
+                Manifest.permission.READ_SMS) == PackageManager.PERMISSION_GRANTED;
     }
 
+    private void requestReadAndSendSmsPermission() {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, Manifest.permission.READ_SMS)) {
+            Log.d(TAG, "shouldShowRequestPermissionRationale(), no permission requested");
+            return;
+        }
+        ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.READ_SMS},
+                SMS_PERMISSION_CODE);
+    }
 }
+
+
