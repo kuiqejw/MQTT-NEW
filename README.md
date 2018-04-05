@@ -9,7 +9,7 @@ A tutorial for using the MQTT Android Service, as seen on https://wildanmsyah.wo
 ### Functionality:
   -Retrieves from cloudMQTT broker messages uploaded by Server
   -Allows user to decide whether to send verification message or not. Could opt for automatic sending and manual testing
-  !(SMS1.png)(SMS2.png)
+  ![SMS](SMS1.png)(SMS2.png)
 ### How to modify MqttHelper.java:
   Make change to CloudMQTT server by changing serverUri variable on line 20, clientId, username and password to suitable cloudmqtt broker corresponding names.
   Able to distinguish between topics by changing variable subscriptionTopic on line 23
