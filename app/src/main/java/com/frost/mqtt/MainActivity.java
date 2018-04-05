@@ -33,8 +33,8 @@ public class MainActivity extends AppCompatActivity {
     MqttHelper mqttHelper;
     TextView dataReceived;
     Button btn_send;
-    ToggleButton toggle;
-    private static boolean FLAG;
+    public static ToggleButton toggle;
+    public static boolean FLAG;
     private static final String TAG = "MainActivity";
     private static final String PREF_USER_MOBILE_PHONE = "pref_user_mobile_phone";
     private static final int SMS_PERMISSION_CODE = 0;

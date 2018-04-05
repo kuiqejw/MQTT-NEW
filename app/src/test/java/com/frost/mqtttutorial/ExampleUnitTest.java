@@ -1,5 +1,6 @@
 package com.frost.mqtttutorial;
 
+import com.frost.mqtt.MainActivity;
 import com.frost.mqtt.SmsHelper;
 
 import org.junit.Test;
@@ -24,5 +25,9 @@ public class ExampleUnitTest {
     public void SmsHelper_notValidNumber() throws Exception {
         assertFalse(SmsHelper.isValidPhoneNumber("Java Unit Test"));
     }
-
+    @Test
+    public void toggle_Valid() throws Exception{
+        MainActivity.toggle.toggle();
+        assertTrue(MainActivity.FLAG);
+    }
 }
