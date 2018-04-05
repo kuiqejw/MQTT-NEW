@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/background"
     tools:context="com.frost.mqtttutorial.com.frost.mqtt.MainActivity"
 >
 
@@ -13,7 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hello World!"
-        android:textColor="#6970af"
+        android:textColor="#f7f7fa"
         android:layout_gravity="center_horizontal"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
@@ -38,6 +39,8 @@
         android:textAlignment="center"
         android:background="@drawable/buttonwhite"
         android:layout_marginTop="250sp"
+        android:layout_marginBottom="30dp"
+        android:layout_marginRight="30dp"
         android:layout_gravity="end"/>
 
 </LinearLayout>

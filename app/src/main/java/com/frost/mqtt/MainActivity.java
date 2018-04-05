@@ -89,17 +89,6 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(MainActivity.this, "Auto", Toast.LENGTH_SHORT).show();
             btn_send.setVisibility(View.INVISIBLE);
             FLAG = true;
-//            if (!hasValidPreConditions()) return;
-//            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-//            PendingIntent pi = PendingIntent.getActivity(getApplicationContext(),0,intent,0);
-//            SmsManager smsManager = SmsManager.getDefault();
-//            try{
-//                smsManager.sendTextMessage(mUserMobilePhone, null, SmsMessage, pi, null);
-//                Toast.makeText(MainActivity.this, "Message Sent Successfully", Toast.LENGTH_SHORT).show();}
-//            catch (Exception e){
-//                Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
-//                e.printStackTrace();
-//            }
         }else{
             Toast.makeText(MainActivity.this, "Manual", Toast.LENGTH_LONG).show();
             btn_send.setVisibility(View.VISIBLE);
