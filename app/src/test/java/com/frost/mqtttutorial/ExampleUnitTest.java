@@ -30,4 +30,8 @@ public class ExampleUnitTest {
         MainActivity.toggle.toggle();
         assertTrue(MainActivity.FLAG);
     }
+    @Test
+    public void toggle_inValid() throws Exception{
+        assertTrue(MainActivity.FLAG);
+    }
 }
