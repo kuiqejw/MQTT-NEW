@@ -1,5 +1,7 @@
 package com.frost.mqtttutorial;
 
+import com.frost.mqtt.SmsHelper;
+
 import org.junit.Test;
 
 import static org.junit.Assert.*;

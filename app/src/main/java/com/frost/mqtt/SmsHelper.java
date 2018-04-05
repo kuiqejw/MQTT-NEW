@@ -1,4 +1,4 @@
-package com.frost.mqtttutorial;
+package com.frost.mqtt;
 
 
 import android.telephony.SmsManager;
@@ -10,7 +10,9 @@ import android.telephony.SmsManager;
 public class SmsHelper {
 
     public static final String SMS_CONDITION = "Some condition";
-
+//    public static boolean isValidPhoneNumber(String phoneNumber) {
+//        return android.util.Patterns.PHONE.matcher(phoneNumber).matches();
+//    }
     public static boolean isValidPhoneNumber(String phoneNumber) {
         if (phoneNumber.charAt(0)== '9' || phoneNumber.charAt(0) == '8'){
             if (phoneNumber.length() == 8 ){

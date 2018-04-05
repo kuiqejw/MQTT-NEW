@@ -1,31 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.frost.mqtttutorial.MainActivity">
+    android:orientation="vertical"
+    tools:context="com.frost.mqtttutorial.com.frost.mqtt.MainActivity"
+>
 
     <TextView
         android:id="@+id/dataReceived"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.192" />
+        android:textColor="#6970af"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:paddingTop="50dp"/>
 
     <Button
         android:id="@+id/send_sms"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/buttonwhite"
         android:text="Send SMS to this number"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.38"  />
+        android:layout_gravity="center"
+        android:layout_marginTop="70sp"
+        android:padding="25dp" />
 
-</android.support.constraint.ConstraintLayout>
+    <ToggleButton
+        android:id="@+id/toggleButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textOn="Auto"
+        android:textOff="Manual"
+        android:textAlignment="center"
+        android:background="@drawable/buttonwhite"
+        android:layout_marginTop="250sp"
+        android:layout_gravity="end"/>
+
+</LinearLayout>

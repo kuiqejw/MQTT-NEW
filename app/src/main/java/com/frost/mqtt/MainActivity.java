@@ -1,4 +1,4 @@
-package com.frost.mqtttutorial;
+package com.frost.mqtt;
 
 import android.app.PendingIntent;
 import android.content.Intent;
@@ -17,17 +17,14 @@ import android.Manifest;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.Toast;
+import android.widget.ToggleButton;
+
+import com.frost.mqtttutorial.R;
 
 import helpers.MqttHelper;
 
@@ -36,7 +33,8 @@ public class MainActivity extends AppCompatActivity {
     MqttHelper mqttHelper;
     TextView dataReceived;
     Button btn_send;
-
+    ToggleButton toggle;
+    private static boolean FLAG;
     private static final String TAG = "MainActivity";
     private static final String PREF_USER_MOBILE_PHONE = "pref_user_mobile_phone";
     private static final int SMS_PERMISSION_CODE = 0;
@@ -51,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         dataReceived = (TextView) findViewById(R.id.dataReceived);
         btn_send = (Button) findViewById(R.id.send_sms);
+        toggle = (ToggleButton) findViewById(R.id.toggleButton);
         startMqtt();
         if (!hasReadSmsPermission()) {
             showRequestPermissionsInfoAlertDialog();
@@ -64,15 +63,49 @@ public class MainActivity extends AppCompatActivity {
                 SmsManager smsManager = SmsManager.getDefault();
                 try{
                     smsManager.sendTextMessage(mUserMobilePhone, null, SmsMessage, pi, null);
-                    Toast.makeText(MainActivity.this, "Message Sent Successfully", Toast.LENGTH_SHORT).show();}
+                    Toast.makeText(MainActivity.this, "Message Sent Successfully", Toast.LENGTH_SHORT).show();
+                }
                 catch (Exception e){
                     Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
                     e.printStackTrace();
                 }
+                dataReceived.setText("");
+        }
+        });
+        toggle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                toggleClick(view);
             }
         });
+        Toast.makeText(MainActivity.this, "This has been reached to the end", Toast.LENGTH_LONG).show();
+
     }
 
+
+
+    public void toggleClick(View v){
+        if (toggle.isChecked()){
+            Toast.makeText(MainActivity.this, "Auto", Toast.LENGTH_SHORT).show();
+            btn_send.setVisibility(View.INVISIBLE);
+            FLAG = true;
+//            if (!hasValidPreConditions()) return;
+//            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+//            PendingIntent pi = PendingIntent.getActivity(getApplicationContext(),0,intent,0);
+//            SmsManager smsManager = SmsManager.getDefault();
+//            try{
+//                smsManager.sendTextMessage(mUserMobilePhone, null, SmsMessage, pi, null);
+//                Toast.makeText(MainActivity.this, "Message Sent Successfully", Toast.LENGTH_SHORT).show();}
+//            catch (Exception e){
+//                Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+//                e.printStackTrace();
+//            }
+        }else{
+            Toast.makeText(MainActivity.this, "Manual", Toast.LENGTH_LONG).show();
+            btn_send.setVisibility(View.VISIBLE);
+            FLAG = false;
+        }
+    }
     private void startMqtt(){
         mqttHelper = new MqttHelper(getApplicationContext());
         mqttHelper.mqttAndroidClient.setCallback(new MqttCallbackExtended() {
@@ -92,6 +125,20 @@ public class MainActivity extends AppCompatActivity {
                 dataReceived.setText(mqttMessage.toString());
                 mUserMobilePhone = mqttMessage.toString().split(":")[0];
                 SmsMessage = mqttMessage.toString().split(":")[1];
+                if (FLAG){
+                    if (!hasValidPreConditions()) return;
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    PendingIntent pi = PendingIntent.getActivity(getApplicationContext(),0,intent,0);
+                    SmsManager smsManager = SmsManager.getDefault();
+                    try{
+                        smsManager.sendTextMessage(mUserMobilePhone, null, SmsMessage, pi, null);
+                        Toast.makeText(MainActivity.this, "Message Sent Successfully", Toast.LENGTH_SHORT).show();}
+                    catch (Exception e){
+                        Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                        e.printStackTrace();
+                    }
+                    dataReceived.setText("");
+                }
 
             }
 
